@@ -4,3 +4,13 @@ spring:
   ai:
     openai:
       api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: gpt-4.1-mini
+      embedding:
+        options:
+          model: text-embedding-3-small
+
+logging:
+  level:
+    org.springframework.ai: INFO
