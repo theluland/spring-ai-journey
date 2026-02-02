@@ -8,11 +8,11 @@ import java.util.Map;
 
 @RestController
 public class HelloController {
-
     @GetMapping("/hello")
     public Map<String, Object> hello() {
+
         return Map.of(
-                "message", "Hello Roland 👋",
+                "message", "Hello Roland! 👋",
                 "timestamp", Instant.now().toString()
         );
     }
