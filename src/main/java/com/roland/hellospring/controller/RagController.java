@@ -1,21 +1,20 @@
 package com.roland.hellospring.controller;
 
 import com.roland.hellospring.ai.RagRetriever;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.roland.hellospring.dto.RagRequest;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class RagController {
 
-   private final RagRetriever ragRetriever;
+    private final RagRetriever ragRetriever;
 
-   public RagController(RagRetriever ragRetriever) {
-       this.ragRetriever = ragRetriever;
-   }
+    public RagController(RagRetriever ragRetriever) {
+        this.ragRetriever = ragRetriever;
+    }
 
-   @GetMapping("/rag")
-   public String rag(@RequestParam String q) {
-       return ragRetriever.retrieveContext(q);
-   }
+    @PostMapping("/rag")
+    public String rag(@RequestBody RagRequest request) {
+        return ragRetriever.retrieveContext(request.query());
+    }
 }

@@ -1,0 +1,72 @@
+@host = http://localhost:8080
+
+### ------------------------------------------------------------
+### HELLO
+### ------------------------------------------------------------
+GET {{host}}/hello
+
+
+### ------------------------------------------------------------
+### RAG
+### ------------------------------------------------------------
+POST {{host}}/rag
+Content-Type: application/json
+
+{
+  "query": "Fahrrad Schaltwerk Arbeitsweg"
+}
+
+
+### ------------------------------------------------------------
+### CLARIFICATION AGENT (single step)
+### ------------------------------------------------------------
+POST {{host}}/agent/step
+Content-Type: application/json
+
+{
+  "text": "Ich bin mit dem Fahrrad gestürzt und das Schaltwerk ist kaputt."
+}
+
+
+### ------------------------------------------------------------
+### AGENT ORCHESTRATOR (full run)
+### ------------------------------------------------------------
+POST {{host}}/agent/run
+Content-Type: application/json
+
+{
+  "text": "Ich bin mit dem Fahrrad gestürzt und das Schaltwerk ist kaputt."
+}
+
+
+### ------------------------------------------------------------
+### EDGE CASE – wenig Kontext
+### ------------------------------------------------------------
+POST {{host}}/agent/run
+Content-Type: application/json
+
+{
+  "text": "Mein Fahrrad ist kaputt."
+}
+
+
+### ------------------------------------------------------------
+### EDGE CASE – klarer Claim
+### ------------------------------------------------------------
+POST {{host}}/agent/run
+Content-Type: application/json
+
+{
+  "text": "Ich hatte einen Unfall auf dem Arbeitsweg und mein Schaltwerk ist zerstört."
+}
+
+
+### ------------------------------------------------------------
+### EDGE CASE – vermutlich kein Claim
+### ------------------------------------------------------------
+POST {{host}}/agent/run
+Content-Type: application/json
+
+{
+  "text": "Ich möchte mein Fahrrad upgraden und ein neues Schaltwerk kaufen."
+}

@@ -2,9 +2,8 @@ package com.roland.hellospring.controller;
 
 import com.roland.hellospring.agent.AgentOrchestrator;
 import com.roland.hellospring.agent.AgentOutcome;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.roland.hellospring.dto.AgentRunRequest;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ConversationController {
@@ -15,10 +14,10 @@ public class ConversationController {
         this.orchestrator = orchestrator;
     }
 
-    @GetMapping("/agent/run")
-    public AgentOutcome run(@RequestParam String text) {
+    @PostMapping("/agent/run")
+    public AgentOutcome run(@RequestBody AgentRunRequest request) {
 
-        // Demo: immer gleiche Antwort (damit du Endlosschleifen siehst & die Stops greifen)
-        return orchestrator.run(text, (question) -> "Der Unfall war gestern auf dem Arbeitsweg.");
+        // Demo-Antwort (später ersetzen wir das durch Multi-Turn API)
+        return orchestrator.run(request.text(), (question) -> "Der Unfall war gestern auf dem Arbeitsweg.");
     }
 }
