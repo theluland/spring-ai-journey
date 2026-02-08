@@ -2,9 +2,8 @@ package com.roland.hellospring.controller;
 
 import com.roland.hellospring.ai.ClarificationAgent;
 import com.roland.hellospring.agent.AgentStep;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.roland.hellospring.dto.AgentStepRequest;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AgentController {
@@ -15,8 +14,8 @@ public class AgentController {
         this.agent = agent;
     }
 
-    @GetMapping("/agent/step")
-    public AgentStep step(@RequestParam String text) {
-        return agent.nextStep(text);
+    @PostMapping("/agent/step")
+    public AgentStep step(@RequestBody AgentStepRequest request) {
+        return agent.nextStep(request.text());
     }
 }
