@@ -70,3 +70,29 @@ Content-Type: application/json
 {
   "text": "Ich möchte mein Fahrrad upgraden und ein neues Schaltwerk kaufen."
 }
+
+
+### ------------------------------------------------------------
+### CHAT (Memory)
+### ------------------------------------------------------------
+
+### 1) neue Conversation-ID holen
+POST {{host}}/api/chat/new
+
+### 2) Namen setzen (conversationId fix = 1)
+POST {{host}}/api/chat
+Content-Type: application/json
+
+{
+  "conversationId": "1",
+  "message": "Mein Name ist Roland."
+}
+
+### 3) Namen abfragen (sollte Roland ergeben)
+POST {{host}}/api/chat
+Content-Type: application/json
+
+{
+  "conversationId": "1",
+  "message": "Wie heiße ich?"
+}
