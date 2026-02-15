@@ -1,23 +1,32 @@
 package com.roland.hellospring.controller;
 
-import com.roland.hellospring.agent.AgentOrchestrator;
-import com.roland.hellospring.agent.AgentOutcome;
-import com.roland.hellospring.dto.AgentRunRequest;
+import com.roland.hellospring.conversation.ConversationService;
+import com.roland.hellospring.dto.ChatRequest;
+import com.roland.hellospring.dto.ChatResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/chat")
 public class ConversationController {
 
-    private final AgentOrchestrator orchestrator;
+    private final ConversationService conversationService;
 
-    public ConversationController(AgentOrchestrator orchestrator) {
-        this.orchestrator = orchestrator;
+    public ConversationController(ConversationService conversationService) {
+        this.conversationService = conversationService;
     }
 
-    @PostMapping("/agent/run")
-    public AgentOutcome run(@RequestBody AgentRunRequest request) {
+    @PostMapping("/new")
+    public String newConversation() {
+        return conversationService.newConversationId();
+    }
 
-        // Demo-Antwort (später ersetzen wir das durch Multi-Turn API)
-        return orchestrator.run(request.text(), (question) -> "Der Unfall war gestern auf dem Arbeitsweg.");
+    @PostMapping
+    public ChatResponse chat(@RequestBody ChatRequest req) {
+        String conversationId = (req.conversationId() == null || req.conversationId().isBlank())
+                ? conversationService.newConversationId()
+                : req.conversationId();
+
+        String answer = conversationService.chat(conversationId, req.message());
+        return new ChatResponse(conversationId, answer);
     }
 }
