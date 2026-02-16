@@ -96,3 +96,33 @@ Content-Type: application/json
   "conversationId": "1",
   "message": "Wie heiße ich?"
 }
+
+### ------------------------------------------------------------
+### CHAT (Memory + optional RAG)
+### ------------------------------------------------------------
+
+POST {{host}}/api/chat
+Content-Type: application/json
+
+{
+  "conversationId": "22",
+  "message": "Mein Name ist Roland."
+}
+
+###
+POST {{host}}/api/chat
+Content-Type: application/json
+
+{
+  "conversationId": "22",
+  "message": "Wie heiße ich?"
+}
+
+###
+POST {{host}}/api/chat
+Content-Type: application/json
+
+{
+  "conversationId": "22",
+  "message": "Was bedeutet RAG und wann sollte ich es einsetzen?"
+}

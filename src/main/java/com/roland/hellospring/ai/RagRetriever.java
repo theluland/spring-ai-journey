@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Component
 public class RagRetriever {
@@ -25,8 +26,8 @@ public class RagRetriever {
                         .build()
         );
 
-        return docs.stream()
-                .map(Document::getFormattedContent)
+        return IntStream.range(0, docs.size())
+                .mapToObj(i -> "[" + (i + 1) + "] " + docs.get(i).getFormattedContent())
                 .collect(Collectors.joining("\n"));
     }
 }
